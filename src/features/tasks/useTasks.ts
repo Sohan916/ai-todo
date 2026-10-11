@@ -4,6 +4,7 @@ import type { Task } from "./types";
 export type UseTasksResult = {
   tasks: Task[];
   addTask: (title: string) => void;
+  removeTask: (id: string) => void;
 };
 
 export function useTasks(): UseTasksResult {
@@ -15,5 +16,9 @@ export function useTasks(): UseTasksResult {
     setTasks((current) => [...current, { id: crypto.randomUUID(), title: trimmed }]);
   }
 
-  return { tasks, addTask };
+  function removeTask(id: string): void {
+    setTasks((current) => current.filter((task) => task.id !== id));
+  }
+
+  return { tasks, addTask, removeTask };
 }
